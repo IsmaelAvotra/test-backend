@@ -9,7 +9,7 @@ export const createTask = async (req: Request, res: Response) => {
 }
 
 export const getTask = async (req: Request, res: Response) => {
-  res.send('Get a single task')
+  res.send({ id: req.params.id })
 }
 
 export const updateTask = async (req: Request, res: Response) => {
