@@ -1,14 +1,27 @@
-import express from 'express'
-import tasksRouter from './routes/tasks'
-import 'dotenv/config'
+import express from "express";
+import tasksRouter from "./routes/tasks";
+import "dotenv/config";
 
-const app = express()
-const port = process.env.PORT
+import { connectDb } from "./db/connect";
+
+const app = express();
+const port = process.env.PORT;
+const dbUrl = process.env.MONGODB_URL;
+const baseUrl = "/api/v1/tasks";
 
 //middleware
-app.use(express.json())
+app.use(express.json());
 
 //routes
-app.use('/api/v1/tasks', tasksRouter)
+app.use(baseUrl, tasksRouter);
 
-app.listen(port, () => console.log(`Server running on port  ${port}`))
+const start = async () => {
+  try {
+    await connectDb(dbUrl);
+    app.listen(port, () => console.log(`Server running on port  ${port}`));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
