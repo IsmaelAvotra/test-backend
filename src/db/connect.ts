@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 export const connectDb = (url: string) => {
-  return mongoose.connect(url);
-};
+  return mongoose.set('strictQuery', false), mongoose.connect(url)
+}
