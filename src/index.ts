@@ -4,6 +4,7 @@ import 'dotenv/config'
 
 import { connectDb } from './db/connect'
 import { notFound } from '../src/middleware/not_found'
+import { errorHandlerMiddleware } from '../src/middleware/error_handler'
 
 const app = express()
 const port = process.env.PORT
@@ -16,6 +17,7 @@ app.use(express.json())
 //routes
 app.use(baseUrl, router)
 app.use(notFound)
+app.use(errorHandlerMiddleware)
 
 const start = async () => {
   try {
