@@ -4,15 +4,20 @@ import { asyncWrapper } from './../middleware/async_wrapper'
 
 interface QueryObject {
   featured?: boolean
+  company?: string
 }
 
 export const getAllProducts = asyncWrapper(
   async (req: Request, res: Response) => {
-    const { featured } = req.query
+    const { featured, company } = req.query
 
     const queryObject: QueryObject = {}
     if (featured) {
       queryObject.featured = featured === 'true' ? true : false
+    }
+
+    if (company) {
+      queryObject.company = company as string
     }
 
     console.log(queryObject)
