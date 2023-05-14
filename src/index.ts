@@ -1,32 +1,28 @@
 import express from 'express'
+import { router } from './routes/tasks'
 import 'dotenv/config'
 
-import { productsRouter } from './routes/products'
 import { connectDb } from './db/connect'
-import { notFoundMiddleware } from './middleware/not_found'
-import { errorHandlerMiddleware } from './middleware/error_handler'
+import { notFound } from '../src/middleware/not_found'
+import { errorHandlerMiddleware } from '../src/middleware/error_handler'
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 const dbUrl = process.env.MONGODB_URL
+const baseUrl = '/api/v1/tasks'
 
-// Middleware
+//middleware
 app.use(express.json())
 
-// Routes
-app.use('/api/v1/products', productsRouter)
-
-//products route
-
-app.use(notFoundMiddleware)
+//routes
+app.use(baseUrl, router)
+app.use(notFound)
 app.use(errorHandlerMiddleware)
 
 const start = async () => {
   try {
     await connectDb(dbUrl)
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}...`)
-    })
+    app.listen(port, () => console.log(`Server running on port  ${port}`))
   } catch (error) {
     console.log(error)
   }

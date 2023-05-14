@@ -1,9 +1,7 @@
-export class CustomAPIError {
-  message!: string
-  statusCode!: number
-
+export class CustomAPIError extends Error {
+  statusCode: number
   constructor(message: string, statusCode: number) {
-    this.message = message
+    super(message)
     this.statusCode = statusCode
   }
 }
