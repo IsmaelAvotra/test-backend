@@ -1,10 +1,10 @@
 import express from 'express'
 import 'dotenv/config'
 
-import { productsRouter } from './routes/products'
 import { connectDb } from './db/connect'
 import { notFoundMiddleware } from './middleware/not_found'
 import { errorHandlerMiddleware } from './middleware/error_handler'
+import { studentsRouter } from './routes/students'
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -14,9 +14,7 @@ const dbUrl = process.env.MONGODB_URL
 app.use(express.json())
 
 // Routes
-app.use('/api/v1/products', productsRouter)
-
-//products route
+app.use('/students', studentsRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
